@@ -1,0 +1,18 @@
+{
+  "name": "back-work-attendance",
+  "version": "1.0.0",
+  "description": "No desc, it's for test",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "attendance"
+  ],
+  "author": "dev.admj",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
