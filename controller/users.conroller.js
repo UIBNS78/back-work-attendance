@@ -11,6 +11,12 @@ exports.getUser = async (request, response) => {
     const result = await userAdapter.getUser(username);
     response.json(result);
 }
+exports.logout = (request, response, next) => {
+    request.logOut(err => {
+        if (err) return next(err);
+        response.json({ success: true, message: "You are out now.", result: {} });
+    });
+}
 
 // POST
 exports.login = async (request, response) => {
