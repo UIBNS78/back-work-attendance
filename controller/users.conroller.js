@@ -6,6 +6,11 @@ exports.getAllUser = async (request, response) => {
     const result = await userAdapter.getAllUser();
     response.json(result);
 }
+exports.getUser = async (request, response) => {
+    const { username } = request.body;
+    const result = await userAdapter.getUser(username);
+    response.json(result);
+}
 
 // POST
 exports.login = async (request, response) => {

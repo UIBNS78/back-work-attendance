@@ -14,6 +14,6 @@ exports.authenticate = (request, response, next) => {
     });
 }
 
-exports.generate = (user) => {
-    return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15s' });
+exports.generate = (user, options = {}) => {
+    return 'Bearer ' + jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, options);
 }

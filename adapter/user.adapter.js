@@ -26,13 +26,16 @@ function login(user) {
             if (result && result.length > 0) {
                 const u = { ...result[0] };
                 try {
-                    if (await bcrypt.compare(password, u.password)) {
-                        const user = await getUser(username);
-                        user.token = token.generate({ ...user });
-                        resolve({ success: true, result: user });
-                    } else {
-                        resolve({ success: false, message: "Wrong password", result: {} })
-                    }
+                    bcrypt.compare(password, u.password, async (error, success) => {
+                        if (error)  throw error;
+                        if (success) {
+                            const user = await getUser(username);
+                            user.token = token.generate({ ...user });
+                            resolve({ success: true, result: user });
+                        } else {
+                            resolve({ success: false, message: "Wrong password", result: {} })
+                        }
+                    });
                 } catch {
                     resolve({ success: false, message: "Can't decrypt password." });
                 }
@@ -65,7 +68,6 @@ async function signup (user) {
     });
 }
 
-// PRIVATE METHOD
 function getUser(username) {
     return new Promise((resolve, reject) => {
         Users.query(queries.select.USER_BY_TRIGRAM(username), async (error, user) => {
@@ -81,5 +83,5 @@ function getUser(username) {
 }
 
 module.exports = {
-    getAllUser, login, signup
+    getAllUser, login, signup, getUser
 }
