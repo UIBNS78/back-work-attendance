@@ -106,4 +106,15 @@ const queries = {
     }
 }
 
-module.exports = queries;
+const messages = {
+    wrongPassword: "Wrong password.",
+    catchBcrypt: "An error appears while decrypt password.",
+    userUnexist: "User doesn't exist.",
+    userExist: "User already exists.",
+    loginDone: "You are done.",
+    insertFailed: "Insert wasn't work.",
+    fieldEmpty: "Seems like fields are not correct or empty.",
+    noUser: "No user found."
+}
+
+module.exports = { queries, messages };

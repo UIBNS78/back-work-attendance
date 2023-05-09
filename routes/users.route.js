@@ -5,7 +5,6 @@ const token = require('../utils/auth.token');
 const passport = require('passport');
 
 // GET METHODS
-// router.get('/all', token.authenticate, userContoller.getAllUser);
 router.get('/all', passport.authenticate('jwt', { session: false }), userContoller.getAllUser);
 router.get('/logout', userContoller.logout);
 

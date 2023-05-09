@@ -1,5 +1,5 @@
 const Users = require('../config/local.env');
-const queries = require('../common/queries');
+const { queries, messages } = require('../common/all-strings');
 const bcrypt = require('bcryptjs');
 const token = require('../utils/auth.token');
 
@@ -33,14 +33,14 @@ function login(user) {
                             user.token = token.generate({ ...user });
                             resolve({ success: true, result: user });
                         } else {
-                            resolve({ success: false, message: "Wrong password", result: {} })
+                            resolve({ success: false, message: messages.wrongPassword, result: {} })
                         }
                     });
                 } catch {
-                    resolve({ success: false, message: "Can't decrypt password." });
+                    resolve({ success: false, message: messages.catchBcrypt });
                 }
             } else {
-                resolve({ success: false, message: "User doesn't exist." });
+                resolve({ success: false, message: messages.userUnexist });
             }
         });
     });
@@ -53,21 +53,21 @@ function signup(user) {
             const hashedPassword = await bcrypt.hash(password, 10);
             const user = await getUser(username);
             if (user) {
-                resolve({ success: false, message: "User already exists.", result: {} });
+                resolve({ success: false, message: messages.userExist, result: {} });
             } else {
                 Users.query(queries.insert.SIGNUP(username, hashedPassword), async (error, result) => {
                     if (error)
                         resolve({ success: false, message: error.message, result: {} });
                     if (result && result.affectedRows > 0) {
                         const user = await getUser(username);
-                        resolve({ success: true, message: "You are done.", result: { user: user } });
+                        resolve({ success: true, message: messages.loginDone, result: { user: user } });
                     } else {
-                        resolve({ success: false, message: "Insert wasn't work." });
+                        resolve({ success: false, message: messages.insertFailed });
                     }
                 });
             }
         } else {
-            resolve({ success: false, message: 'Seems like fields are not correct or empty.', result: {} });
+            resolve({ success: false, message: messages.fieldEmpty, result: {} });
         }
     });
 }
