@@ -1,5 +1,5 @@
-require('dotenv').config();
-const jwt = require('jsonwebtoken');
+require("dotenv").config();
+const jwt = require("jsonwebtoken");
 
 // exports.authenticate = (request, response, next) => {
 //     const headers = request.headers['authorization'];
@@ -15,5 +15,11 @@ const jwt = require('jsonwebtoken');
 // }
 
 exports.generate = (user, options = {}) => {
-    return 'Bearer ' + jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, options);
-}
+  return (
+    "Bearer " +
+    jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
+      expiresIn: "12h",
+      ...options,
+    })
+  );
+};

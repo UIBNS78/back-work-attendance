@@ -4,7 +4,10 @@ const express = require("express");
 const passport = require("passport");
 const bodyParser = require("body-parser");
 const session = require("express-session");
-const port = process.env.SERVER_PORT || 3001;
+const port = process.env.SERVER_PORT || 3333;
+
+// connect mongodb
+require("./config/local.env");
 
 const app = express();
 
@@ -28,12 +31,12 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
-require("./config/passport-jwt.config");
-require("./config/passport.config")(passport);
+require("./config/passport/passport-jwt.config");
+require("./config/passport/passport.config")(passport);
 
 // routing
 app.use("/users", require("./routes/users.route"));
 
 app.listen(port, () => {
-  console.log(`backend app listening on port ${port}`);
+  console.log(`Backend app listening on port ${port}`);
 });

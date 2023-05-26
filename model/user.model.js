@@ -1,14 +1,22 @@
-class User {
-    constructor() {
-        this.trigram = null;
-    }
+const mongoose = require("mongoose");
 
-    initModel(user) {
-        this.trigram = user.trigram;
-    }
+const UserSchema = mongoose.Schema(
+  {
+    name: { type: String, required: true },
+    firstName: { type: String, required: true },
+    username: { type: String, required: true },
+    password: { type: String, required: true },
+    picture: {
+      type: String,
+      required: true,
+      default:
+        "https://www.seekpng.com/png/full/41-410093_circled-user-icon-user-profile-icon-png.png",
+    },
+    created_at: { type: Date, default: Date.now },
+  },
+  { timestamp: true }
+);
 
-    getTrigram() { return this.trigram; }
-    setTrigram(trigram) { this.trigram = trigram; }
-}
+const User = mongoose.model("User", UserSchema);
 
-exports.module = User;
+module.exports = User;

@@ -1,5 +1,5 @@
 require("dotenv").config();
-const { messages } = require("../common/all-strings");
+const { messages } = require("../../common/all-strings");
 const JwtStrategy = require("passport-jwt").Strategy;
 const ExtractJwt = require("passport-jwt").ExtractJwt;
 const passport = require("passport");
