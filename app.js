@@ -35,7 +35,8 @@ require("./config/passport/passport-jwt.config");
 require("./config/passport/passport.config")(passport);
 
 // routing
-app.use("/users", require("./routes/users.route"));
+app.use("/user", require("./routes/user.route"));
+app.use("/chat", require("./routes/chat.route"));
 
 app.listen(port, () => {
   console.log(`Backend app listening on port ${port}`);

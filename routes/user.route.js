@@ -1,15 +1,19 @@
 const express = require("express");
 const router = express.Router();
-const userContoller = require("../controller/users.conroller");
+const userContoller = require("../controller/user.conroller");
 const passport = require("passport");
 
 // GET METHODS
-// router.get(
-//   "/all",
-//   passport.authenticate("jwt", { session: false }),
-//   userContoller.getAllUser
-// );
-router.get("/all", userContoller.getAllUser);
+router.get(
+  "/all",
+  passport.authenticate("jwt", { session: false }),
+  userContoller.getAllUser
+);
+router.get(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  userContoller.searchUser
+);
 router.get("/logout", userContoller.logout);
 
 // POST METHODS

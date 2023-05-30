@@ -1,5 +1,5 @@
 const Users = require("../model/user.model");
-const { queries, messages } = require("../common/all-strings");
+const { messages } = require("../common/all-strings");
 const bcrypt = require("bcryptjs");
 const AuthToken = require("../utils/auth.token");
 
@@ -15,6 +15,36 @@ function getAllUser() {
         console.log("errorrrr", err);
         resolve({ success: false, message: err.message, result: {} });
       });
+  });
+}
+
+// search user
+function searchUser(keyword, userConnected) {
+  return new Promise(async (resolve, reject) => {
+    if (keyword && keyword.length >= 3) {
+      const query = {
+        $or: [
+          { name: { $regex: keyword, $options: "i" } },
+          { firstName: { $regex: keyword, $options: "i" } },
+          { username: { $regex: keyword, $options: "i" } },
+        ],
+      };
+      Users.find(query)
+        .find({ _id: { $ne: userConnected._id } })
+        .then((result) => {
+          resolve({ result });
+        })
+        .catch((err) => {
+          console.log(err);
+          resolve({ success: false, message: err.message, result: {} });
+        });
+    } else {
+      resolve({
+        success: false,
+        message: "keyword empty or too short",
+        result: {},
+      });
+    }
   });
 }
 
@@ -100,4 +130,5 @@ module.exports = {
   getAllUser,
   signup,
   getUser,
+  searchUser,
 };

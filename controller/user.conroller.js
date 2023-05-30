@@ -17,6 +17,12 @@ exports.logout = (request, response, next) => {
     response.json({ success: true, message: "You are out now.", result: {} });
   });
 };
+exports.searchUser = async (request, response) => {
+  const { search } = request.query;
+  const userConnected = request.user._doc;
+  const result = await userAdapter.searchUser(search, userConnected);
+  response.json(result);
+};
 
 // POST
 exports.login = async (request, response) => {

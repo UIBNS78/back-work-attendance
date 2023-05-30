@@ -10,7 +10,7 @@ const options = {
 };
 passport.use(
   new JwtStrategy(options, (payload, done) => {
-    if (payload && payload.trigramme) {
+    if (payload && payload._doc.username) {
       return done(null, payload);
     } else {
       return done(null, false, { message: messages.noUser });

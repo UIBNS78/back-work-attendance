@@ -23,10 +23,7 @@ module.exports = (passport) => {
                     if (error) throw error;
                     if (success) {
                       const user = await userAdapter.getUser(username);
-                      const token = AuthToken.generate(
-                        { ...user },
-                        { expiresIn: "30s" }
-                      );
+                      const token = AuthToken.generate({ ...user });
                       return done(null, { user, token });
                     } else {
                       return done(null, false, {
@@ -43,31 +40,6 @@ module.exports = (passport) => {
           .catch((err) =>
             done(null, false, { message: "Can't connect to db." })
           );
-        // Users.query(queries.select.LOGIN(username), (error, result) => {
-        //   if (error) throw error;
-        //   if (result && result.length <= 0) {
-        //     return done(null, false, { message: messages.userUnexist });
-        //   } else {
-        //     const u = { ...result[0] };
-        // try {
-        //   bcrypt.compare(password, u.password, async (error, success) => {
-        //     if (error) throw error;
-        //     if (success) {
-        //       const user = await userAdapter.getUser(username);
-        //       user.token = token.generate(
-        //         { ...user },
-        //         { expiresIn: "30s" }
-        //       );
-        //       return done(null, user);
-        //     } else {
-        //       return done(null, false, { message: messages.wrongPassword });
-        //     }
-        //   });
-        // } catch {
-        //   done(null, false, { message: messages.catchBcrypt });
-        // }
-        //   }
-        // });
       }
     )
   );
