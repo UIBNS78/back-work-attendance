@@ -4,9 +4,9 @@ const bcrypt = require("bcryptjs");
 const AuthToken = require("../utils/auth.token");
 
 // get all user
-function getAllUser() {
+function getAllUser(userConnected) {
   return new Promise((resolve, reject) => {
-    Users.find()
+    Users.find({ _id: { $ne: userConnected._id } })
       .sort({ created_at: "descending" })
       .then((users) => {
         resolve({ success: true, message: "", result: users });

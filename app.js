@@ -37,6 +37,7 @@ require("./config/passport/passport.config")(passport);
 // routing
 app.use("/user", require("./routes/user.route"));
 app.use("/chat", require("./routes/chat.route"));
+app.use("/message", require("./routes/message.route"));
 
 app.listen(port, () => {
   console.log(`Backend app listening on port ${port}`);

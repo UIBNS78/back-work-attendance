@@ -3,7 +3,8 @@ const userAdapter = require("../adapter/user.adapter");
 // GET
 // get all user
 exports.getAllUser = async (request, response) => {
-  const result = await userAdapter.getAllUser();
+  const userConnected = request.user._doc;
+  const result = await userAdapter.getAllUser(userConnected);
   response.json(result);
 };
 exports.getUser = async (request, response) => {
